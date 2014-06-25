@@ -4,15 +4,15 @@ function pmprokm_init() {
 
     global $pmprokm_options, $current_user, $pmprokm_identity;
 
-    //only run if we have both API key and JS code
-    if(empty($pmprokm_options['apikey']) || empty($pmprokm_options['js']))
+    //only run if we have at least an API key or JS tracking code
+    if(empty($pmprokm_options['apikey']) && empty($pmprokm_options['js']))
         return false;
 
     //initialize php
     KM::init($pmprokm_options['apikey']);
 
     //initialize js
-    add_action('wp_footer', 'pmprokm_js_wp_footer');
+    add_action('wp_head', 'pmprokm_js_wp_head');
 
     //if we're logged in track username, otherwise track cookie
     if(is_user_logged_in())
@@ -23,6 +23,7 @@ function pmprokm_init() {
     if(!empty($pmprokm_identity))
         KM::identify($pmprokm_identity);
 
+    define('PMPROKM_READY', true);
 }
 add_action('init', 'pmprokm_init');
 
@@ -35,11 +36,11 @@ function pmprokm_read_js_identity() {
     }
 }
 
-function pmprokm_js_wp_footer() {
+function pmprokm_js_wp_head() {
     
     global $pmprokm_options, $pmprokm_identity;
 
-    //main KISSmetrics tracking js
+    //add KISSmetrics tracking js
     echo $pmprokm_options['js'];
 
     //set identity
