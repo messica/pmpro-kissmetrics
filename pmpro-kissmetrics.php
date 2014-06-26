@@ -21,7 +21,6 @@ if(empty($pmprokm_options)) {
         'js' => '',
         'track_wp_registrations' => '',
         'track_wp_logins' => '',
-        'track_wp_logouts' => '',
         'track_pmpro_pages' => '',
         'track_pmpro_cancel' => '',
         'track_pmpro_change_level' => '',
@@ -69,6 +68,7 @@ function pmprokm_wp_login($user_login, $user) {
         return;
 
     KM::record('Logged in');
+
 }
 add_action('wp_login', 'pmprokm_wp_login', 10, 2);
 
@@ -145,8 +145,7 @@ function pmprokm_after_checkout($user_id) {
         $level = pmpro_getLevel($order->membership_id);
 
         $props = array(
-            'Current Gateway' => $order->gateway,
-            'Last Order ID' => $order->id,
+            'Last Order ID' => $order->id
         );
 
         //track event
@@ -184,9 +183,8 @@ function pmprokm_admin_init() {
     //add settings fields
     add_settings_field('apikey', 'API Key', 'pmprokm_apikey', 'pmpro-kissmetrics', 'pmprokm_general');
     add_settings_field('js', 'JavaScript Tracking Code', 'pmprokm_js', 'pmpro-kissmetrics', 'pmprokm_general');
-    add_settings_field('track_wp_registration', 'Track Registrations', 'pmprokm_track_wp_registration', 'pmpro-kissmetrics', 'pmprokm_wp');
+    add_settings_field('track_wp_registrations', 'Track Registrations', 'pmprokm_track_wp_registrations', 'pmpro-kissmetrics', 'pmprokm_wp');
     add_settings_field('track_wp_logins', 'Track Logins', 'pmprokm_track_wp_logins', 'pmpro-kissmetrics', 'pmprokm_wp');
-    add_settings_field('track_wp_logouts', 'Track Logouts', 'pmprokm_track_wp_logouts', 'pmpro-kissmetrics', 'pmprokm_wp');
 
     if(defined('PMPRO_VERSION')) {
         add_settings_field('track_pmpro_pages', 'Track PMPro Front End Page Visits', 'pmprokm_track_pmpro_pages', 'pmpro-kissmetrics', 'pmprokm_pmpro');

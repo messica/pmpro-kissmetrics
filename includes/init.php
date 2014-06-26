@@ -14,7 +14,7 @@ function pmprokm_init() {
     //initialize js
     add_action('wp_head', 'pmprokm_js_wp_head');
 
-    //if we're logged in track username, otherwise track cookie
+    //if we're logged in track username, otherwise reset identity and track anonymous
     if(is_user_logged_in())
         $pmprokm_identity = $current_user->user_login;
     else

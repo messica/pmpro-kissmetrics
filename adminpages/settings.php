@@ -33,11 +33,11 @@ function pmprokm_js() {
 }
 
 //wordpress tracking settings
-function pmprokm_track_wp_registration() {
+function pmprokm_track_wp_registrations() {
     global $pmprokm_options;
     ?>
-    <input id="track_wp_registration" type="checkbox" name="pmprokm_options[track_wp_registration]" value="1"
-        <?php if(!empty($pmprokm_options['track_wp_registration'])) echo 'checked="true"'; ?>>
+    <input id="track_wp_registrations" type="checkbox" name="pmprokm_options[track_wp_registrations]" value="1"
+        <?php if(!empty($pmprokm_options['track_wp_registrations'])) echo 'checked="true"'; ?>>
 <?php
 }
 function pmprokm_track_wp_logins() {
@@ -45,13 +45,6 @@ function pmprokm_track_wp_logins() {
     ?>
     <input id="track_wp_logins" type="checkbox"  name="pmprokm_options[track_wp_logins]" value="1"
         <?php if(!empty($pmprokm_options['track_wp_logins'])) echo 'checked="true"'; ?>>
-<?php
-}
-function pmprokm_track_wp_logouts() {
-    global $pmprokm_options;
-    ?>
-    <input id="track_wp_logouts" type="checkbox"  name="pmprokm_options[track_wp_logouts]" value="1"
-        <?php if(!empty($pmprokm_options['track_wp_logouts'])) echo 'checked="true"'; ?>>
 <?php
 }
 
