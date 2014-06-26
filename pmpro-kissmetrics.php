@@ -86,12 +86,7 @@ function pmprokm_template_redirect() {
 
     if(in_array($post->ID, $pmpro_pages)) {
 
-        $props = array(
-            'page' => array_keys($pmpro_pages, $post->ID)[0],
-            'permalink' => get_permalink($post->ID)
-        );
-
-        $event = 'Visited PMPro ' . ucfirst(array_keys($pmpro_pages, $post->ID)[0]) . ' Page';
+        $event = 'Visited PMPro ' . ucfirst(array_search($post->ID, $pmpro_pages)) . ' Page';
 
         //include selected level if we're on che checkout page
         if($post->ID == $pmpro_pages['checkout']) {
