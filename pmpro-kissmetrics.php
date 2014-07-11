@@ -5,7 +5,7 @@
  * Description: Integrates PMPro with KISSmetrics to track user activity.
  * Author: Stranger Studios
  * Author URI: http://strangerstudios.com
- * Version: .1
+ * Version: .1.1
  */
 
 /*
@@ -19,12 +19,14 @@ if(empty($pmprokm_options)) {
     $pmprokm_options = array(
         'apikey' => '',
         'js' => '',
+        'identify_by' => '',
         'track_wp_registrations' => '',
         'track_wp_logins' => '',
         'track_pmpro_pages' => '',
         'track_pmpro_cancel' => '',
         'track_pmpro_change_level' => '',
         'track_pmpro_checkout' => '',
+        'track_pmpro_total' => '',
         'track_pmpro_trials' => ''
     );
 }
@@ -143,6 +145,9 @@ function pmprokm_after_checkout($user_id) {
             'Last Order ID' => $order->id
         );
 
+        if(!empty($pmprokm_options['track_pmpro_total']))
+            $props['Total'] = $order->total;
+
         //track event
         KM::record('Checked Out', $props);
     }
@@ -178,6 +183,7 @@ function pmprokm_admin_init() {
     //add settings fields
     add_settings_field('apikey', 'API Key', 'pmprokm_apikey', 'pmpro-kissmetrics', 'pmprokm_general');
     add_settings_field('js', 'JavaScript Tracking Code', 'pmprokm_js', 'pmpro-kissmetrics', 'pmprokm_general');
+    add_settings_field('identify_by', 'Identify By', 'pmprokm_identify_by', 'pmpro-kissmetrics', 'pmprokm_wp');
     add_settings_field('track_wp_registrations', 'Track Registrations', 'pmprokm_track_wp_registrations', 'pmpro-kissmetrics', 'pmprokm_wp');
     add_settings_field('track_wp_logins', 'Track Logins', 'pmprokm_track_wp_logins', 'pmpro-kissmetrics', 'pmprokm_wp');
 
@@ -186,6 +192,7 @@ function pmprokm_admin_init() {
         add_settings_field('track_pmpro_change_level', 'Track Membership Level Changes', 'pmprokm_track_pmpro_change_level', 'pmpro-kissmetrics', 'pmprokm_pmpro');
         add_settings_field('track_pmpro_cancel', 'Track Membership Cancellations', 'pmprokm_track_pmpro_cancel', 'pmpro-kissmetrics', 'pmprokm_pmpro');
         add_settings_field('track_pmpro_checkout', 'Track Membership Checkouts', 'pmprokm_track_pmpro_checkout', 'pmpro-kissmetrics', 'pmprokm_pmpro');
+        add_settings_field('track_pmpro_total', 'Track Checkout Total', 'pmprokm_track_pmpro_total', 'pmpro-kissmetrics', 'pmprokm_pmpro');
         add_settings_field('track_pmpro_trials', 'Track Membership Trials', 'pmprokm_track_pmpro_trials', 'pmpro-kissmetrics', 'pmprokm_pmpro');
     }
 

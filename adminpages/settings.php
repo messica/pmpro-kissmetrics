@@ -33,6 +33,16 @@ function pmprokm_js() {
 }
 
 //wordpress tracking settings
+function pmprokm_identify_by() {
+    global $pmprokm_options;
+    ?>
+    <select name="pmprokm_options[identify_by]">
+        <option value="user_login" <?php selected($pmprokm_options['identify_by'], 'user_login'); ?>>Username</option>
+        <option value="user_email" <?php selected($pmprokm_options['identify_by'], 'user_email'); ?>>Email</option>
+        <option value="display_name" <?php selected($pmprokm_options['identify_by'], 'display_name'); ?>>Display Name</option>
+    </select>
+<?php
+}
 function pmprokm_track_wp_registrations() {
     global $pmprokm_options;
     ?>
@@ -75,6 +85,13 @@ function pmprokm_track_pmpro_checkout() {
     ?>
     <input id="track_pmpro_checkout" type="checkbox"  name="pmprokm_options[track_pmpro_checkout]" value="1"
         <?php if(!empty($pmprokm_options['track_pmpro_checkout'])) echo 'checked="true"'; ?>>
+<?php
+}
+function pmprokm_track_pmpro_total() {
+    global $pmprokm_options;
+    ?>
+    <input id="track_pmpro_total" type="checkbox"  name="pmprokm_options[track_pmpro_total]" value="1"
+        <?php if(!empty($pmprokm_options['track_pmpro_total'])) echo 'checked="true"'; ?>>
 <?php
 }
 function pmprokm_track_pmpro_trials() {
