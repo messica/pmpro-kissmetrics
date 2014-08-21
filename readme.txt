@@ -45,6 +45,10 @@ Features:
 Please post it in the issues section of GitHub and we'll fix it as soon as we can. Thanks for helping. https://github.com/strangerstudios/pmpro-kissmetrics/issues
 
 == Changelog ==
+= .2 =
+* BUG: Fixed bug with idenfity option.
+* ENHANCEMENT: Moved identify code into a separate funtion and calling it before all record events now.
+
 = .1.1 =
 * Added option to add the total cost as a property on checkout.
 * Added select menu to choose how to identify users in KISSmetrics. Options are username, email, and display name.

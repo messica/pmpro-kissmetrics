@@ -5,7 +5,7 @@
  * Description: Integrates PMPro with KISSmetrics to track user activity.
  * Author: Stranger Studios
  * Author URI: http://strangerstudios.com
- * Version: .1.1
+ * Version: .2
  */
 
 /*
@@ -38,6 +38,45 @@ require_once(plugin_dir_path(__FILE__) . '/includes/lib/km.php');   //KISSmetric
 require_once(plugin_dir_path(__FILE__) . '/includes/init.php');     //plugin initialization
 
 /*
+ * Identify for KM
+ */
+function pmprokm_identify($user_id = NULL, $how = NULL)
+{
+	global $pmprokm_options;
+	
+	//default user id
+	if(empty($user_id))
+	{
+		global $current_user;
+		$user_id = $current_user->ID;
+	}
+
+	//make sure we have a user id
+	if(empty($user_id))
+		return false;	
+	$user = get_userdata($user_id);
+	
+	//make sure we have a user
+	if(empty($user->ID))
+		return false;
+		
+	//how?
+	if(empty($how))
+		$how = $pmprokm_options['identify_by'];
+		
+	//identify
+    if($how == "user_email")
+		KM::identify($user->user_email);
+	elseif($how == "display_name")
+		KM::identify($user->display_name);
+	else
+		KM::identify($user->user_login);
+		
+	//got here return true
+	return true;
+}
+
+/*
  * Track WP Events
  */
 
@@ -57,6 +96,9 @@ function pmprokm_user_register($user_id) {
         'User ID' => $user_id
     );
 
+	//switch KM identity to affected user
+	pmprokm_identify($user_id);
+	
     KM::record('Registered', $props);
 }
 add_action('user_register', 'pmprokm_user_register');
@@ -69,6 +111,9 @@ function pmprokm_wp_login($user_login, $user) {
     if(!defined('PMPROKM_READY') || empty($pmprokm_options['track_wp_logins']))
         return;
 
+	//switch KM identity to affected user
+	pmprokm_identify($user->ID);
+		
     KM::record('Logged in');
 
 }
@@ -96,6 +141,9 @@ function pmprokm_template_redirect() {
             $event .= ' (' . $level->name . ')';
         }
 
+		//identify as current user if possible
+		pmprokm_identify();
+		
         //record event
         KM::record($event);
     }
@@ -111,8 +159,7 @@ function pmprokm_after_change_membership_level($level_id, $user_id) {
         return;
 
     //switch KM identity to affected user
-    $user = get_userdata($user_id);
-    KM::identify($user->user_login);
+    pmprokm_identify($user_id);
 
     //user changed level
     if(!empty($pmprokm_options['track_pmpro_change_level']) && !empty($level_id)) {
@@ -136,6 +183,9 @@ function pmprokm_after_checkout($user_id) {
     if(!defined('PMPROKM_READY'))
         return;
 
+	//switch KM identity to affected user
+	pmprokm_identify($user_id);
+		
     if(!empty($pmprokm_options['track_pmpro_checkout'])) {
         $order = new MemberOrder;
         $order->getLastMemberOrder($user_id, 'success');
@@ -146,8 +196,8 @@ function pmprokm_after_checkout($user_id) {
         );
 
         if(!empty($pmprokm_options['track_pmpro_total']))
-            $props['Total'] = $order->total;
-
+            $props['Total'] = $order->total;		
+			
         //track event
         KM::record('Checked Out', $props);
     }
