@@ -3,7 +3,7 @@ Contributors: strangerstudios, jessica o
 Tags: pmpro, kissmetrics, analytics, tracking, metrics, user data, users, signup
 Requires at least: 3.8
 Tested up to: 3.9.1
-Stable tag: .2
+Stable tag: .2.1
 
 Integrates your WordPress site with KISSmetrics to track meaningful user data, with or without Paid Memberships Pro.
 
@@ -45,9 +45,12 @@ Features:
 Please post it in the issues section of GitHub and we'll fix it as soon as we can. Thanks for helping. https://github.com/strangerstudios/pmpro-kissmetrics/issues
 
 == Changelog ==
+= .2.1 =
+* Added option to track discount code usage.
+
 = .2 =
 * BUG: Fixed bug with idenfity option.
-* ENHANCEMENT: Moved identify code into a separate funtion and calling it before all record events now.
+* ENHANCEMENT: Moved identify code into a separate function and calling it before all record events now.
 
 = .1.1 =
 * Added option to add the total cost as a property on checkout.

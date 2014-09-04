@@ -101,6 +101,13 @@ function pmprokm_track_pmpro_trials() {
         <?php if(!empty($pmprokm_options['track_pmpro_trials'])) echo 'checked="true"'; ?>>
 <?php
 }
+function pmprokm_track_pmpro_discount_codes() {
+    global $pmprokm_options;
+    ?>
+    <input id="track_pmpro_discount_codes" type="checkbox"  name="pmprokm_options[track_pmpro_discount_codes]" value="1"
+        <?php if(!empty($pmprokm_options['track_pmpro_discount_codes'])) echo 'checked="true"'; ?>>
+<?php
+}
 
 /*
  * Display Page

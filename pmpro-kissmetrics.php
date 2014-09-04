@@ -5,7 +5,7 @@
  * Description: Integrates PMPro with KISSmetrics to track user activity.
  * Author: Stranger Studios
  * Author URI: http://strangerstudios.com
- * Version: .2
+ * Version: .2.1
  */
 
 /*
@@ -27,7 +27,8 @@ if(empty($pmprokm_options)) {
         'track_pmpro_change_level' => '',
         'track_pmpro_checkout' => '',
         'track_pmpro_total' => '',
-        'track_pmpro_trials' => ''
+        'track_pmpro_trials' => '',
+        'track_pmpro_discount_codes' => ''
     );
 }
 
@@ -178,19 +179,19 @@ add_action('pmpro_after_change_membership_level', 'pmprokm_after_change_membersh
 //User checks out
 function pmprokm_after_checkout($user_id) {
 
-    global $current_user, $pmprokm_options;
+    global $current_user, $pmprokm_options, $discount_code;
 
     if(!defined('PMPROKM_READY'))
         return;
 
 	//switch KM identity to affected user
 	pmprokm_identify($user_id);
+
+    $order = new MemberOrder;
+    $order->getLastMemberOrder($user_id, 'success');
+    $level = pmpro_getLevel($order->membership_id);
 		
     if(!empty($pmprokm_options['track_pmpro_checkout'])) {
-        $order = new MemberOrder;
-        $order->getLastMemberOrder($user_id, 'success');
-        $level = pmpro_getLevel($order->membership_id);
-
         $props = array(
             'Last Order ID' => $order->id
         );
@@ -201,6 +202,10 @@ function pmprokm_after_checkout($user_id) {
         //track event
         KM::record('Checked Out', $props);
     }
+
+    //track discount code usage if enabled
+    if(!empty($discount_code) && !empty($pmprokm_options['track_pmpro_discount_codes']))
+        KM::record('Discount Code Used', array('Discount Code' => $discount_code));
 
     //if level contains trial, track trial as well
     if($level->trial_limit > 0 && !empty($pmprokm_options['track_pmpro_trials']))
@@ -242,6 +247,7 @@ function pmprokm_admin_init() {
         add_settings_field('track_pmpro_change_level', 'Track Membership Level Changes', 'pmprokm_track_pmpro_change_level', 'pmpro-kissmetrics', 'pmprokm_pmpro');
         add_settings_field('track_pmpro_cancel', 'Track Membership Cancellations', 'pmprokm_track_pmpro_cancel', 'pmpro-kissmetrics', 'pmprokm_pmpro');
         add_settings_field('track_pmpro_checkout', 'Track Membership Checkouts', 'pmprokm_track_pmpro_checkout', 'pmpro-kissmetrics', 'pmprokm_pmpro');
+        add_settings_field('track_pmpro_discount_codes', 'Track Discount Code Usages', 'pmprokm_track_pmpro_discount_codes', 'pmpro-kissmetrics', 'pmprokm_pmpro');
         add_settings_field('track_pmpro_total', 'Track Checkout Total', 'pmprokm_track_pmpro_total', 'pmpro-kissmetrics', 'pmprokm_pmpro');
         add_settings_field('track_pmpro_trials', 'Track Membership Trials', 'pmprokm_track_pmpro_trials', 'pmpro-kissmetrics', 'pmprokm_pmpro');
     }
