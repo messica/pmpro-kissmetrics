@@ -153,7 +153,12 @@ function pmprokm_after_checkout($user_id) {
     }
 
     //if level contains trial, track trial as well
-    if($level->trial_limit > 0 && !empty($pmprokm_options['track_pmpro_trials']))
+    
+    // Because trial can mean different things to different systems, let's give
+    // some flexibility through a filter. Default is that it's a trial if trial_limit>0.
+    $is_trial = apply_filters('pmprokm_is_trial', $level->trial_limit > 0, $level);
+    
+    if($is_trial && !empty($pmprokm_options['track_pmpro_trials']))
         KM::record('Started Trial');
 }
 add_action('pmpro_after_checkout', 'pmprokm_after_checkout');
