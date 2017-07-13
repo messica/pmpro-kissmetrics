@@ -2,7 +2,7 @@
 Contributors: strangerstudios, jessica o
 Tags: pmpro, paid memberships pro, kissmetrics, analytics, tracking, metrics, user data, users, signup
 Requires at least: 3.8
-Tested up to: 3.9.1
+Tested up to: 4.8
 Stable tag: .2.1
 
 Integrates your WordPress site with KISSmetrics to track meaningful user data, with or without Paid Memberships Pro.
