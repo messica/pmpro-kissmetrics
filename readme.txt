@@ -1,6 +1,6 @@
-=== PMPro KISSmetrics ===
+=== Paid Memberships Pro - KISSmetrics Add On ===
 Contributors: strangerstudios, jessica o
-Tags: pmpro, kissmetrics, analytics, tracking, metrics, user data, users, signup
+Tags: pmpro, paid memberships pro, kissmetrics, analytics, tracking, metrics, user data, users, signup
 Requires at least: 3.8
 Tested up to: 3.9.1
 Stable tag: .2.1
@@ -43,6 +43,12 @@ Features:
 = I found a bug in the plugin. =
 
 Please post it in the issues section of GitHub and we'll fix it as soon as we can. Thanks for helping. https://github.com/strangerstudios/pmpro-kissmetrics/issues
+
+== Screenshots ==
+
+1. General Settings for KISSmetrics API Key and JavaScript tracking code.
+2. Set tracking activity for WordPress Users.
+3. Set tracking activity for Paid Memberships Pro members.
 
 == Changelog ==
 = .2.1 =

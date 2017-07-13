@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Plugin Name: PMPro KISSmetrics
+ * Plugin Name: Paid Memberships Pro - KISSmetrics Add On
  * Description: Integrates PMPro with KISSmetrics to track user activity.
  * Author: Stranger Studios
  * Author URI: http://strangerstudios.com
@@ -258,3 +257,31 @@ add_action('admin_init', 'pmprokm_admin_init');
 function pmprokm_settings_page() {
     require_once(plugin_dir_path(__FILE__) . '/adminpages/settings.php');
 }
+
+/*
+Function to add links to the plugin action links
+*/
+function pmprokm_add_action_links($links) {
+	
+	$new_links = array(
+			'<a href="' . get_admin_url(NULL, 'options-general.php?page=pmpro-kissmetrics') . '">Settings</a>',
+	);
+	return array_merge($new_links, $links);
+}
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'pmprokm_add_action_links');
+
+/*
+Function to add links to the plugin row meta
+*/
+function pmprokm_plugin_row_meta($links, $file) {
+	if(strpos($file, 'pmpro-kissmetrics.php') !== false)
+	{
+		$new_links = array(
+			'<a href="' . esc_url('http://www.paidmembershipspro.com/add-ons/third-party-integration/pmpro-kissmetrics/') . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+		);
+		$links = array_merge($links, $new_links);
+	}
+	return $links;
+}
+add_filter('plugin_row_meta', 'pmprokm_plugin_row_meta', 10, 2);
