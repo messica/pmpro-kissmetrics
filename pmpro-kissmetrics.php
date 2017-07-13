@@ -4,7 +4,7 @@
  * Description: Integrates PMPro with KISSmetrics to track user activity.
  * Author: Stranger Studios
  * Author URI: http://strangerstudios.com
- * Version: .2.1
+ * Version: .3
  */
 
 /*

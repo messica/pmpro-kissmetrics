@@ -3,7 +3,7 @@ Contributors: strangerstudios, jessica o
 Tags: pmpro, paid memberships pro, kissmetrics, analytics, tracking, metrics, user data, users, signup
 Requires at least: 3.8
 Tested up to: 4.8
-Stable tag: .2.1
+Stable tag: .3
 
 Integrates your WordPress site with KISSmetrics to track meaningful user data, with or without Paid Memberships Pro.
 
@@ -51,6 +51,10 @@ Please post it in the issues section of GitHub and we'll fix it as soon as we ca
 3. Set tracking activity for Paid Memberships Pro members.
 
 == Changelog ==
+= .3 =
+* Tested up to WP 4.8
+* Added filter call to determine if a level is a trial or not.
+
 = .2.1 =
 * Added option to track discount code usage.
 
