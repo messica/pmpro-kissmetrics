@@ -1,36 +1,39 @@
-=== Paid Memberships Pro - KISSmetrics Add On ===
+=== Paid Memberships Pro - Kissmetrics Add On ===
 Contributors: strangerstudios, jessica o
 Tags: pmpro, paid memberships pro, kissmetrics, analytics, tracking, metrics, user data, users, signup
 Requires at least: 3.8
 Tested up to: 4.8
 Stable tag: .3
 
-Integrates your WordPress site with KISSmetrics to track meaningful user data, with or without Paid Memberships Pro.
+Integrates your WordPress site with Kissmetrics to track meaningful user data, with or without Paid Memberships Pro.
 
 == Description ==
+The Kissmetrics Add On for Paid Memberships Pro allows you to track meaningful data not only about users, but about how they are interacting with the Memberships sections of your website.
 
-Integrates your WordPress site with KISSmetrics to track meaningful user data, with or without Paid Memberships Pro.
+= Default WordPress Tracking =
+Kissmetrics allows you to track meaningful data on per user level, giving you a clear picture of what your visitors are really doing on your website - this plugin works with or without [Paid Memberships Pro](https://www.paidmembershipspro.com). Events and properties tracked by default include:
 
-PMPro KISSmetrics tracks the following events and user properties:
-* User registers
-* User logs in
-* Properties: Username, Email, Display Name, and User ID
-* Identif in KISSmetrics by user's username, email address or display name.
+* Events: user registration, user login
+* Properties: username, email address, display name, user ID
 
-If PMPro is installed, the following additional events and user properties can be tracked:
-* User visits any PMPro front end page
-* User changes membership level
-* User checks out
-* User starts trial
-* Properties: Membership Level, Last Order ID, Checkout Total
+= Paid Memberships Pro Tracking =
+The Kissmetrics Add On for Paid Memberships Pro takes this a step further, allowing you to identify users by their WordPress username, email address, or display name, and track specific events and properties, including:
 
-Each event can be enabled or disabled on the PMPro KISSmetrics Settings page.
+= Tracked Events in Paid Memberships Pro =
+* user visits any front end PMPro page (Levels, Account, Billing, Checkout, etc.). When a user visits the Checkout page, the selected level will be included as well.
+* user changes membership level
+* user checks out for any level
+* user cancels level
+* user starts trial – this occurs when there is a trial set for the level on the Edit Membership Level page
 
-Features:
+= Tracked Properties in Paid Memberships Pro =
+* membership level
+* last order ID
+* last checkout total
 
-* Track powerful user data enabling you to follow EXACTLY what your customers are doing, in an easy to read format.
-* Adds specific WordPress and PMPro properties to your KISSmetrics Customers.
-* Works with or without Paid Memberships Pro.
+Kissmetrics attaches these properties to Customers, giving you all sorts of meaningful data to create different metrics and reports, giving you exactly the information you need to make important decisions and increase your business.
+
+Each event can be enabled or disabled on the PMPro Kissmetrics Settings page under Settings > PMPro Kissmetrics.
 
 == Installation ==
 
@@ -47,8 +50,8 @@ Please post it in the issues section of GitHub and we'll fix it as soon as we ca
 == Screenshots ==
 
 1. General Settings for KISSmetrics API Key and JavaScript tracking code.
-2. Set tracking activity for WordPress Users.
-3. Set tracking activity for Paid Memberships Pro members.
+1. Set tracking activity for WordPress Users.
+1. Set tracking activity for Paid Memberships Pro members.
 
 == Changelog ==
 = .3 =

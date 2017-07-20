@@ -1,10 +1,11 @@
 <?php
 /**
- * Plugin Name: Paid Memberships Pro - KISSmetrics Add On
- * Description: Integrates PMPro with KISSmetrics to track user activity.
+ * Plugin Name: Paid Memberships Pro - Kissmetrics Add On
+ * Description: Integrates your WordPress site with Kissmetrics to track meaningful user data, with or without Paid Memberships Pro.
  * Author: Stranger Studios
  * Author URI: http://strangerstudios.com
  * Version: .3
+ * Text Domain: pmpro-kissmetrics
  */
 
 /*
@@ -34,7 +35,7 @@ if(empty($pmprokm_options)) {
 /*
  * Requires
  */
-require_once(plugin_dir_path(__FILE__) . '/includes/lib/km.php');   //KISSmetrics PHP Library
+require_once(plugin_dir_path(__FILE__) . '/includes/lib/km.php');   //Kissmetrics PHP Library
 require_once(plugin_dir_path(__FILE__) . '/includes/init.php');     //plugin initialization
 
 /*
@@ -223,7 +224,7 @@ add_action('pmpro_after_checkout', 'pmprokm_after_checkout');
  * Setup Settings Page
  */
 function pmprokm_admin_menu() {
-    add_options_page('PMPro KISSmetrics Settings', 'PMPro KISSmetrics', apply_filters('pmpro_edit_member_capability', 'manage_options'), 'pmpro-kissmetrics', 'pmprokm_settings_page');
+    add_options_page('PMPro Kissmetrics Settings', 'PMPro Kissmetrics', apply_filters('pmpro_edit_member_capability', 'manage_options'), 'pmpro-kissmetrics', 'pmprokm_settings_page');
 }
 add_action('admin_menu', 'pmprokm_admin_menu');
 
@@ -274,6 +275,15 @@ function pmprokm_add_action_links($links) {
 	return array_merge($new_links, $links);
 }
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'pmprokm_add_action_links');
+
+
+/**
+ * Load the languages folder for translations.
+ */
+function pmprokm_load_textdomain(){
+	load_plugin_textdomain( 'pmpro-kissmetrics', false, basename( dirname( __FILE__ ) ) . '/languages' ); 
+}
+add_action( 'plugins_loaded', 'pmprokm_load_textdomain' );
 
 /*
 Function to add links to the plugin row meta
