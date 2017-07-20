@@ -14,9 +14,11 @@ function pmprokm_init() {
     //initialize js
     add_action('wp_head', 'pmprokm_js_wp_head');
 
+	$identify_by = $pmprokm_options['identify_by'];
+	
     //if we're logged in track user, otherwise track anonymous
-    if(is_user_logged_in())
-        $pmprokm_identity = $current_user->$pmprokm_options['identify_by'];
+	if(is_user_logged_in())
+        $pmprokm_identity = $current_user->$identify_by;
     else
         $pmprokm_identity = pmprokm_read_js_identity();
 

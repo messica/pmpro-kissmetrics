@@ -19,7 +19,7 @@ if(empty($pmprokm_options)) {
     $pmprokm_options = array(
         'apikey' => '',
         'js' => '',
-        'identify_by' => '',
+        'identify_by' => 'user_login',
         'track_wp_registrations' => '',
         'track_wp_logins' => '',
         'track_pmpro_pages' => '',
