@@ -4,7 +4,7 @@
  * Description: Integrates your WordPress site with Kissmetrics to track meaningful user data, with or without Paid Memberships Pro.
  * Author: Stranger Studios
  * Author URI: http://strangerstudios.com
- * Version: .3
+ * Version: .3.1
  * Text Domain: pmpro-kissmetrics
  */
 
