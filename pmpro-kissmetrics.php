@@ -1,10 +1,11 @@
 <?php
 /**
  * Plugin Name: Paid Memberships Pro - Kissmetrics Add On
+ * Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-kissmetrics/
  * Description: Integrates your WordPress site with Kissmetrics to track meaningful user data, with or without Paid Memberships Pro.
+ * Version: .3.1
  * Author: Stranger Studios
  * Author URI: http://strangerstudios.com
- * Version: .3.1
  * Text Domain: pmpro-kissmetrics
  */
 
@@ -292,7 +293,7 @@ function pmprokm_plugin_row_meta($links, $file) {
 	if(strpos($file, 'pmpro-kissmetrics.php') !== false)
 	{
 		$new_links = array(
-			'<a href="' . esc_url('http://www.paidmembershipspro.com/add-ons/third-party-integration/pmpro-kissmetrics/') . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-kissmetrics/') . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
 			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
 		);
 		$links = array_merge($links, $new_links);
