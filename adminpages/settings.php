@@ -5,10 +5,7 @@
  */
 function pmprokm_general() {
     ?>
-    <p>
-        To integrate PMPro KISSmetrics completely, enter both your API key and JavaScript Tracking Code.<br>
-        Both can be found on your site settings page in the KISSmetrics dashboard.
-    </p>
+    <p><?php _e('Enter your API key and JavaScript Tracking Code in the fields below. These values can be found on the "Site Settings" page in the Kissmetrics dashboard.', 'pmpro-kissmetrics'); ?></p>
     <?php
 }
 function pmprokm_wp() {}
@@ -37,9 +34,9 @@ function pmprokm_identify_by() {
     global $pmprokm_options;
     ?>
     <select name="pmprokm_options[identify_by]">
-        <option value="user_login" <?php selected($pmprokm_options['identify_by'], 'user_login'); ?>>Username</option>
-        <option value="user_email" <?php selected($pmprokm_options['identify_by'], 'user_email'); ?>>Email</option>
-        <option value="display_name" <?php selected($pmprokm_options['identify_by'], 'display_name'); ?>>Display Name</option>
+        <option value="user_login" <?php selected($pmprokm_options['identify_by'], 'user_login'); ?>><?php _e('Username', 'pmpro-kissmetrics'); ?></option>
+        <option value="user_email" <?php selected($pmprokm_options['identify_by'], 'user_email'); ?>><?php _e('Email', 'pmpro-kissmetrics'); ?></option>
+        <option value="display_name" <?php selected($pmprokm_options['identify_by'], 'display_name'); ?>><?php _e('Display Name', 'pmpro-kissmetrics'); ?></option>
     </select>
 <?php
 }
@@ -115,12 +112,9 @@ function pmprokm_track_pmpro_discount_codes() {
 ?>
 
 <div class="wrap">
-    <h2>PMPro KISSmetrics Settings</h2>
-    <p>
-        PMPro KISSmetrics tracks meaningful user data, with or without Paid Memberships Pro installed.<br>
-        If PMPro is not installed, WordPress user registrations, logins, and logouts can be tracked.<br>
-        If PMPro is installed, PMPro page visits (Account, Billing, Checkout, Levels, etc.), membership level changes, checkouts, cancellations, and trials can be tracked.<br>
-    </p>
+    <h2><?php _e('Kissmetrics Integration Settings', 'pmpro-kissmetrics'); ?></h2>
+    <p><?php echo sprintf('This plugin integrates your WordPress site with %s to track meaningful user data, with or without %s.', '<a href="https://www.kissmetrics.com" target="_blank">Kissmetrics</a>', '<a href="https://www.paidmembershipspro.com" target="_blank">Paid Memberships Pro</a>', 'pmpro-kissmetrics'); ?></p>
+	<hr />
     <form action="options.php" method="POST">
         <?php
         settings_fields('pmprokm_options');

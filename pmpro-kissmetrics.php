@@ -1,11 +1,12 @@
 <?php
-
 /**
- * Plugin Name: PMPro KISSmetrics
- * Description: Integrates PMPro with KISSmetrics to track user activity.
- * Author: Stranger Studios
- * Author URI: http://strangerstudios.com
- * Version: .2.1
+ * Plugin Name: Paid Memberships Pro - Kissmetrics Add On
+ * Plugin URI: https://www.paidmembershipspro.com/add-ons/pmpro-kissmetrics/
+ * Description: Integrates your WordPress site with Kissmetrics to track meaningful user data, with or without Paid Memberships Pro.
+ * Version: .3.1
+ * Author: Paid Memberships Pro
+ * Author URI: https://www.paidmembershipspro.com/
+ * Text Domain: pmpro-kissmetrics
  */
 
 /*
@@ -19,7 +20,7 @@ if(empty($pmprokm_options)) {
     $pmprokm_options = array(
         'apikey' => '',
         'js' => '',
-        'identify_by' => '',
+        'identify_by' => 'user_login',
         'track_wp_registrations' => '',
         'track_wp_logins' => '',
         'track_pmpro_pages' => '',
@@ -35,7 +36,7 @@ if(empty($pmprokm_options)) {
 /*
  * Requires
  */
-require_once(plugin_dir_path(__FILE__) . '/includes/lib/km.php');   //KISSmetrics PHP Library
+require_once(plugin_dir_path(__FILE__) . '/includes/lib/km.php');   //Kissmetrics PHP Library
 require_once(plugin_dir_path(__FILE__) . '/includes/init.php');     //plugin initialization
 
 /*
@@ -208,7 +209,12 @@ function pmprokm_after_checkout($user_id) {
         KM::record('Discount Code Used', array('Discount Code' => $discount_code));
 
     //if level contains trial, track trial as well
-    if($level->trial_limit > 0 && !empty($pmprokm_options['track_pmpro_trials']))
+    
+    // Because trial can mean different things to different systems, let's give
+    // some flexibility through a filter. Default is that it's a trial if trial_limit>0.
+    $is_trial = apply_filters('pmprokm_is_trial', $level->trial_limit > 0, $level);
+    
+    if($is_trial && !empty($pmprokm_options['track_pmpro_trials']))
         KM::record('Started Trial');
 }
 add_action('pmpro_after_checkout', 'pmprokm_after_checkout');
@@ -219,7 +225,7 @@ add_action('pmpro_after_checkout', 'pmprokm_after_checkout');
  * Setup Settings Page
  */
 function pmprokm_admin_menu() {
-    add_options_page('PMPro KISSmetrics Settings', 'PMPro KISSmetrics', apply_filters('pmpro_edit_member_capability', 'manage_options'), 'pmpro-kissmetrics', 'pmprokm_settings_page');
+    add_options_page('PMPro Kissmetrics Settings', 'PMPro Kissmetrics', apply_filters('pmpro_edit_member_capability', 'manage_options'), 'pmpro-kissmetrics', 'pmprokm_settings_page');
 }
 add_action('admin_menu', 'pmprokm_admin_menu');
 
@@ -258,3 +264,40 @@ add_action('admin_init', 'pmprokm_admin_init');
 function pmprokm_settings_page() {
     require_once(plugin_dir_path(__FILE__) . '/adminpages/settings.php');
 }
+
+/*
+Function to add links to the plugin action links
+*/
+function pmprokm_add_action_links($links) {
+	
+	$new_links = array(
+			'<a href="' . get_admin_url(NULL, 'options-general.php?page=pmpro-kissmetrics') . '">Settings</a>',
+	);
+	return array_merge($new_links, $links);
+}
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'pmprokm_add_action_links');
+
+
+/**
+ * Load the languages folder for translations.
+ */
+function pmprokm_load_textdomain(){
+	load_plugin_textdomain( 'pmpro-kissmetrics', false, basename( dirname( __FILE__ ) ) . '/languages' ); 
+}
+add_action( 'plugins_loaded', 'pmprokm_load_textdomain' );
+
+/*
+Function to add links to the plugin row meta
+*/
+function pmprokm_plugin_row_meta($links, $file) {
+	if(strpos($file, 'pmpro-kissmetrics.php') !== false)
+	{
+		$new_links = array(
+			'<a href="' . esc_url('https://www.paidmembershipspro.com/add-ons/pmpro-kissmetrics/') . '" title="' . esc_attr( __( 'View Documentation', 'pmpro-kissmetrics' ) ) . '">' . __( 'Docs', 'pmpro-kissmetrics' ) . '</a>',
+			'<a href="' . esc_url('https://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro-kissmetrics' ) ) . '">' . __( 'Support', 'pmpro-kissmetrics' ) . '</a>',
+		);
+		$links = array_merge($links, $new_links);
+	}
+	return $links;
+}
+add_filter('plugin_row_meta', 'pmprokm_plugin_row_meta', 10, 2);
